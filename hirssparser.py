@@ -145,7 +145,7 @@ for note in shownotes[:firstshownote]:
     if 'listeners' not in note[0].lower() and 'patreon' not in note[0].lower() and 'rss' not in note[0].lower() and 'itunes' not in note[0].lower() and 'discuss' not in note[0].lower():
         name = ''
         for char in note[0]:
-            if char.isalnum():
+            if char.isalnum() or char == '\'':
                 name += char
             else:
                 break
