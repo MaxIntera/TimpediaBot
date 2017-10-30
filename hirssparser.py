@@ -107,9 +107,13 @@ ytlink = 'https://www.youtube.com' + soup.find(attrs={'class':'yt-uix-tile-link'
 # Get first reddit link from search
 textToSearch = title
 query = urllib.quote(textToSearch)
-print query
 url = "https://www.reddit.com/r/CGPGrey/search?q=" + query + "&restrict_sr=on&sort=relevance&t=all"
-response = urllib2.urlopen(url)
+def searchReddit():
+    try:
+        response = urllib2.urlopen(url)
+    except urllib2.HTTPException:
+        print('Error searching reddit, retrying...')
+        searchReddit()
 red_html = response.read()
 soup = BeautifulSoup(red_html, 'html.parser')
 
