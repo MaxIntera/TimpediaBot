@@ -37,6 +37,7 @@ def main():
                  username,
                  password,
                  contents)
+    print('Page edit complete.\n')
 
 # Usage: cat some_file.txt | editpage.py
 if __name__ == "__main__":
