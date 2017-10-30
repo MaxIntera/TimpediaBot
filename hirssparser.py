@@ -8,6 +8,10 @@ import os
 import sys
 import feedparser
 
+# Use UTF-8
+reload(sys)  
+sys.setdefaultencoding('utf8')
+
 if len(sys.argv) > 2:
     print 'Error: too many arguments'
     sys.exit(1)
@@ -57,6 +61,12 @@ soup = BeautifulSoup(html_description, 'html.parser')
 shownotes = []
 for link in soup('a'):
     shownotes.append((link.text, link['href']))
+
+firstshownote = 0
+for i in range(len(shownotes)):
+    if 'discuss' in shownotes[i][0].lower():
+        firstshownote = i + 1
+        break
 
 title = feed['entries'][whichep]['title_detail']['value']
 
@@ -153,7 +163,7 @@ f.write('==Official Description==\n')
 f.write(description.split('==', 1)[0].strip())
 
 f.write('\n\n==Show Notes==\n')
-for snlink in shownotes:
+for snlink in shownotes[firstshownote:]:
     f.write('*[' + snlink[1] + ' ' + snlink[0] + ']\n')
 
 curmonth = time.strftime('%B %Y', time.gmtime())
