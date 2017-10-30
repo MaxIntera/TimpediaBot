@@ -20,7 +20,7 @@ def replace_page(wikiname,
     site.login(username, password)
     page = site.Pages[pagename]
     some = page.text()
-    page.save(contents, summary='Test')
+    page.save(contents, summary='This edit was generated and posted by an automated script. The script is still a WIP.')
 
 def main():
     wikiname='hellointernet.miraheze.org'
