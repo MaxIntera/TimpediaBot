@@ -12,18 +12,15 @@ import feedparser
 reload(sys)  
 sys.setdefaultencoding('utf8')
 
-if len(sys.argv) > 2:
-    print 'Error: too many arguments'
+if len(sys.argv) != 2:
+    print 'Error: incorrect number of arguments'
     sys.exit(1)
-
-if len(sys.argv) == 2:
+else:
     try:
         epnum = int(sys.argv[1])
     except ValueError:
         print 'Error: invalid argument'
         sys.exit(1)
-else:
-    whichep = 0
 
 # Parse the rss into feed
 feed = feedparser.parse('http://www.hellointernet.fm/podcast?format=rss')
