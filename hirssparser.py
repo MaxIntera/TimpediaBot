@@ -121,6 +121,18 @@ except IndexError:
 
 ituneslink = 'http://www.hellointernet.fm/itunes'
 
+# Create a list of sponsors
+sponsors = []
+for note in shownotes[:firstshownote]:
+    if 'listeners' not in note[0].lower() and 'patreon' not in note[0].lower() and 'rss' not in note[0].lower() and 'itunes' not in note[0].lower() and 'discuss' not in note[0].lower():
+        name = ''
+        for char in note[0]:
+            if char.isalnum():
+                name += char
+            else:
+                break
+        sponsors.append(name)
+
 f = open('formatted.txt', 'w')
 
 # Write to file
@@ -136,7 +148,7 @@ f.write('| airdate = {{Start date|' + date2 + '}}\n')
 f.write('| length = ' + timestamp + '\n')
 f.write('| reddit = [' + redlink + ' Link]\n')
 f.write('| website = [' + link + ' Link]\n')
-f.write('| sponsors     = {{hlist}}\n')
+f.write('| sponsors     = {{hlist|' + '|'.join(sponsors) + '}}\n')
 f.write('| prev = [[H.I. No. ' + str(epnum - 1) + ': ' + prevtitle + '|' + prevtitle + ']]\n')
 if nexttitle == '':
     f.write('| next = \n')
