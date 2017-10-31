@@ -73,6 +73,11 @@ os.remove('description.html')
 os.remove('description.mw')
 print('Created MediaWiki-format description...')
 
+soup = BeautifulSoup(html_description, 'html.parser')  
+shownotes = []
+for link in soup('a'):
+    shownotes.append((link.text, link['href']))
+
 # Calculate where the first real shownote starts for later
 firstshownote = 0
 for i in range(len(shownotes)):
