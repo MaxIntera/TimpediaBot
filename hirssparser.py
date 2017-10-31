@@ -52,8 +52,8 @@ f.close()
 
 subprocess.call(['pandoc', '-f', 'html', '-t', 'mediawiki', 'description.html', '-o', 'description.mw'])
 
+# Use search and replace to tweak some formatting minutae
 replacements = {'==':'=', 'By:':'By', 'Notes:':'Notes'}
-
 lines = []
 with open('description.mw') as infile:
     for line in infile:
@@ -72,13 +72,6 @@ f.close()
 os.remove('description.html')
 os.remove('description.mw')
 print('Created MediaWiki-format description...')
-
-# Parse the shownotes from the html
-soup = BeautifulSoup(html_description, 'html.parser')  
-shownotes = []
-for link in soup('a'):
-    shownotes.append((link.text, link['href']))
-print('Fetched shownotes...')
 
 # Calculate where the first real shownote starts for later
 firstshownote = 0
@@ -209,17 +202,9 @@ intro += date3 + '}}</ref>\n\n'
 f.write(intro)
 print('Created initial paragraph')
 
-# TODO make the code proper and fix the logging
 f.write('= Official Description =\n')
 f.write(description)
-print('Added official description...') 
-
-
-
-# f.write('\n\n==Show Notes==\n')
-# for snlink in shownotes[firstshownote:]:
-#     f.write('*[' + snlink[1] + ' ' + snlink[0] + ']\n')
-# print('Added shownotes...')
+print('Added official description and shownotes...') 
 
 curmonth = time.strftime('%B %Y', time.gmtime())
 
