@@ -51,9 +51,24 @@ f.write(html_description)
 f.close()
 
 subprocess.call(['pandoc', '-f', 'html', '-t', 'mediawiki', 'description.html', '-o', 'description.mw'])
+
+replacements = {'==':'=', 'By:':'By', 'Notes:':'Notes'}
+
+lines = []
+with open('description.mw') as infile:
+    for line in infile:
+        for src, target in replacements.iteritems():
+            line = line.replace(src, target)
+        lines.append(line)
+        print(line)
+with open('description.mw', 'w') as outfile:
+    for line in lines:
+        outfile.write(line)
+
 f = open('description.mw', 'r')
 description = f.read()
 f.close()
+
 os.remove('description.html')
 os.remove('description.mw')
 print('Created MediaWiki-format description...')
@@ -194,14 +209,17 @@ intro += date3 + '}}</ref>\n\n'
 f.write(intro)
 print('Created initial paragraph')
 
-f.write('==Official Description==\n')
-f.write(description.split('==', 1)[0].strip())
+# TODO make the code proper and fix the logging
+f.write('= Official Description =\n')
+f.write(description)
 print('Added official description...') 
 
-f.write('\n\n==Show Notes==\n')
-for snlink in shownotes[firstshownote:]:
-    f.write('*[' + snlink[1] + ' ' + snlink[0] + ']\n')
-print('Added shownotes...')
+
+
+# f.write('\n\n==Show Notes==\n')
+# for snlink in shownotes[firstshownote:]:
+#     f.write('*[' + snlink[1] + ' ' + snlink[0] + ']\n')
+# print('Added shownotes...')
 
 curmonth = time.strftime('%B %Y', time.gmtime())
 
@@ -211,7 +229,7 @@ footer += '{{collapse top|title=Flowchart}}\n{{Empty section|date=' + curmonth +
 footer += '{{collapse top|title=Summary}}\n{{Empty section|date=' + curmonth +'}}\n{{collapse bottom}}\n\n'
 footer += '{{collapse top|title=Transcript}}\n{{Empty section|date=' + curmonth +'}}\n{{collapse bottom}}\n\n'
 footer += '{{Hello Internet episodes}}\n\n'
-footer += '==References==\n{{reflist}}\n\n[[Category:HelloInternetEpisode]]\n\n__NOTOC__\n'
+footer += '= References =\n{{reflist}}\n\n[[Category:HelloInternetEpisode]]\n\n__NOTOC__\n'
 f.write(footer)
 print('Created footer elements...')
 
