@@ -218,8 +218,8 @@ footer += '{{collapse top|title=Fan Art}}\n{{Empty section|date=' + curmonth +'}
 footer += '{{collapse top|title=Flowchart}}\n{{Empty section|date=' + curmonth +'}}\n{{collapse bottom}}\n\n'
 footer += '{{collapse top|title=Summary}}\n{{Empty section|date=' + curmonth +'}}\n{{collapse bottom}}\n\n'
 footer += '{{collapse top|title=Transcript}}\n{{Empty section|date=' + curmonth +'}}\n{{collapse bottom}}\n\n'
-footer += '{{Hello Internet episodes}}\n\n'
-footer += '= References =\n{{reflist}}\n\n[[Category:HelloInternetEpisode]]\n\n__NOTOC__\n'
+footer += '= References =\n{{reflist}}\n\n[[Category:HelloInternetEpisode]]\n\n'
+footer += '{{Hello Internet episodes}}\n\n__NOTOC__\n'
 f.write(footer)
 print('Created footer elements...')
 
