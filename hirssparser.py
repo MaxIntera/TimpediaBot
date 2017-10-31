@@ -87,7 +87,7 @@ print('Processed a stripped down version of the title...')
 # Dates and date formats
 date = time.strftime('%B %d, %Y', feed['entries'][whichep]['published_parsed'])
 date2 = time.strftime('%Y|%B|%d', feed['entries'][whichep]['published_parsed'])
-date3 = time.strftime('%d %B %Y', feed['entries'][whichep]['published_parsed'])
+date3 = time.strftime('%d %B %Y', time.gmtime())
 print('Formatted release date...')
 
 # hellointernet.fm link
