@@ -51,19 +51,27 @@ f.write(html_description)
 f.close()
 
 subprocess.call(['pandoc', '-f', 'html', '-t', 'mediawiki', 'description.html', '-o', 'description.mw'])
+
+# Use search and replace to tweak some formatting minutae
+replacements = {'==':'=', 'By:':'By', 'Notes:':'Notes'}
+lines = []
+with open('description.mw') as infile:
+    for line in infile:
+        for src, target in replacements.iteritems():
+            line = line.replace(src, target)
+        lines.append(line)
+        print(line)
+with open('description.mw', 'w') as outfile:
+    for line in lines:
+        outfile.write(line)
+
 f = open('description.mw', 'r')
 description = f.read()
 f.close()
+
 os.remove('description.html')
 os.remove('description.mw')
 print('Created MediaWiki-format description...')
-
-# Parse the shownotes from the html
-soup = BeautifulSoup(html_description, 'html.parser')  
-shownotes = []
-for link in soup('a'):
-    shownotes.append((link.text, link['href']))
-print('Fetched shownotes...')
 
 # Calculate where the first real shownote starts for later
 firstshownote = 0
@@ -87,7 +95,7 @@ print('Processed a stripped down version of the title...')
 # Dates and date formats
 date = time.strftime('%B %d, %Y', feed['entries'][whichep]['published_parsed'])
 date2 = time.strftime('%Y|%B|%d', feed['entries'][whichep]['published_parsed'])
-date3 = time.strftime('%d %B %Y', feed['entries'][whichep]['published_parsed'])
+date3 = time.strftime('%d %B %Y', time.gmtime())
 print('Formatted release date...')
 
 # hellointernet.fm link
@@ -194,14 +202,9 @@ intro += date3 + '}}</ref>\n\n'
 f.write(intro)
 print('Created initial paragraph')
 
-f.write('==Official Description==\n')
-f.write(description.split('==', 1)[0].strip())
-print('Added official description...') 
-
-f.write('\n\n==Show Notes==\n')
-for snlink in shownotes[firstshownote:]:
-    f.write('*[' + snlink[1] + ' ' + snlink[0] + ']\n')
-print('Added shownotes...')
+f.write('= Official Description =\n')
+f.write(description)
+print('Added official description and shownotes...') 
 
 curmonth = time.strftime('%B %Y', time.gmtime())
 
@@ -211,7 +214,7 @@ footer += '{{collapse top|title=Flowchart}}\n{{Empty section|date=' + curmonth +
 footer += '{{collapse top|title=Summary}}\n{{Empty section|date=' + curmonth +'}}\n{{collapse bottom}}\n\n'
 footer += '{{collapse top|title=Transcript}}\n{{Empty section|date=' + curmonth +'}}\n{{collapse bottom}}\n\n'
 footer += '{{Hello Internet episodes}}\n\n'
-footer += '==References==\n{{reflist}}\n\n[[Category:HelloInternetEpisode]]\n\n__NOTOC__\n'
+footer += '= References =\n{{reflist}}\n\n[[Category:HelloInternetEpisode]]\n\n__NOTOC__\n'
 f.write(footer)
 print('Created footer elements...')
 
