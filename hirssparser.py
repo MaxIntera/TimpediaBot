@@ -213,7 +213,7 @@ print('Added official description and shownotes...')
 
 curmonth = time.strftime('%B %Y', time.gmtime())
 
-footer = ''
+footer = '= Other =\n'
 footer += '{{collapse top|title=Fan Art}}\n{{Empty section|date=' + curmonth +'}}\n{{collapse bottom}}\n\n'
 footer += '{{collapse top|title=Flowchart}}\n{{Empty section|date=' + curmonth +'}}\n{{collapse bottom}}\n\n'
 footer += '{{collapse top|title=Summary}}\n{{Empty section|date=' + curmonth +'}}\n{{collapse bottom}}\n\n'
