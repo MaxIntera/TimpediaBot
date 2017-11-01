@@ -53,7 +53,7 @@ f.close()
 subprocess.call(['pandoc', '-f', 'html', '-t', 'mediawiki', 'description.html', '-o', 'description.mw'])
 
 # Use search and replace to tweak some formatting minutae
-replacements = {'==':'=', 'By:':'By', 'Notes:':'Notes'}
+replacements = {'==':'=', 'By:':'By', 'Notes:':'Notes', 'Sponsors:':'Sponsors'}
 lines = []
 with open('description.mw') as infile:
     for line in infile:
